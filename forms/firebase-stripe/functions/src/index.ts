@@ -18,9 +18,8 @@ export const submitChargeForm = functions.https.onRequest(async (request, respon
         const card_number = body.card_number;
         const card_cvc    = body.card_cvc;
 
-        const exp_data    = body.exp_data.split("/");
-        const exp_month   = +exp_data[0];
-        const exp_year    = +exp_data[1];
+        const exp_month   = body.exp_month;
+        const exp_year    = body.exp_year;
         
         const card_name   = body.cardholder_name;
         const city        = body.city;
