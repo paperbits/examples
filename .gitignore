@@ -1,4 +1,6 @@
 .vscode/
-forms/**/node_modules
-forms/**/lib
-forms/**/etc
+**/node_modules
+**/lib
+**/etc
+**/.firebaserc
+**/package-lock.json
