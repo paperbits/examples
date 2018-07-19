@@ -1,7 +1,4 @@
-forms/firebase-simple/functions/node_modules/
-forms/firebase-simple/functions/lib/
-forms/firebase-simple/functions/etc/
-forms/firebase-stripe/functions/node_modules/
-forms/firebase-stripe/functions/lib/
-forms/firebase-stripe/functions/etc/
 .vscode/
+forms/**/node_modules
+forms/**/lib
+forms/**/etc
