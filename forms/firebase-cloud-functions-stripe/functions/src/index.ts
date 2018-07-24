@@ -6,7 +6,7 @@ admin.initializeApp();
 
 const stripeClient = new Stripe(functions.config().stripe.token);
 
-export const submitChargeForm = functions.https.onRequest(async (request, response) => {
+export const submitPayment = functions.https.onRequest(async (request, response) => {
     // Get params from request
     const requestToken = request.body.requestToken || request.query.requestToken;
     const redirectUrl = request.body._redirect || request.query._redirect;
