@@ -1,0 +1,68 @@
+﻿@import "variables.scss";
+@import "mixins.scss";
+
+.btn {
+    border: none;
+    background: none;
+    color: $color-base;
+    font-family: $font-family-base;
+    font-size: $font-size-base;
+    line-height: $workshop-button-height;
+    min-width: $workshop-button-height;
+    text-decoration: none;
+    text-align: center;
+    vertical-align: middle;
+    @include no-select;
+
+    &:focus,
+    &:hover {
+        @include selection(5px);
+        outline: none;
+        color: $color-base;
+        cursor: pointer;
+    }
+
+    &:disabled {
+        opacity: 0.2;
+    }
+}
+
+.btn-link {
+    color: $button-link-color;
+    text-decoration: none;
+}
+
+.btn-danger,
+.btn-danger:hover,
+.btn-danger:active {
+    background: $color-danger;
+    color: $button-danger-text-color;
+}
+
+.btn-group {
+    padding-top: 15px;
+
+    .btn {
+        margin-right: 15px;
+    }
+}
+
+.btn-info,
+.btn-info:hover,
+.btn-info:active {
+    min-width: initial;
+    border: none;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    color: $collapse-button-color;
+    z-index: 99999;
+    @extend .paperbits-icon;
+    @extend .paperbits-alert-circle-i;
+}
+
+.btn-dismiss {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
