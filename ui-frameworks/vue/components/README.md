@@ -40,15 +40,17 @@ injector.bindModule(new ClickCounterPublishModule());
 
 **demo.runtime.module.ts**
 ```
+import { VueModule } from "@paperbits/vue/vue.module";
 import { ClickCounterRuntimeModule } from "../components/click-counter/clickCounter.runtime.module";
 ...
+injector.bindModule(new VueModule());
 injector.bindModule(new ClickCounterRuntimeModule());
 ```
 #### 5. Adjust build configuration
 
-Add `vue-loader` and `vue$` alias in `./webpack.runtime.js` file:
+Add `vue-loader` and `vue$` alias in `./webpack.runtime.js`, `./webpack.design.js` and `./webpack.publish.js` files:
 ```
-const runtimeConfig = {
+const webpackConfig = {
     ...
     module: {
         rules: [
