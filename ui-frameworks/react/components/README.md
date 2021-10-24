@@ -11,6 +11,10 @@ In the *paperbits-demo* project, install React packages:
 > npm i react react-dom --save
 > npm i @types/react --save-dev
 ```
+Plus that, install Paperbits React integration library:
+```
+> npm i @paperbits/react --save
+```
 
 #### 3. Register modules
 Register *Click Counter* widget modules in respective module files of *paperbits-demo* project:
@@ -18,19 +22,26 @@ Register *Click Counter* widget modules in respective module files of *paperbits
 **demo.design.module.ts**
 
 ```
+import { ReactModule } from "@paperbits/react/react.module";
 import { ClickCounterDesignModule } from "../components/click-counter/clickCounter.design.module";
+...
+injector.bindModule(new ReactModule());
 injector.bindModule(new ClickCounterDesignModule());
 ```
 
 **demo.publish.module.ts**
 ```
+import { ReactModule } from "@paperbits/react/react.module";
 import { ClickCounterDesignModule } from "../components/click-counter/clickCounter.publish.module";
+...
+injector.bindModule(new ReactModule());
 injector.bindModule(new ClickCounterPublishModule());
 ```
 
 **demo.runtime.module.ts**
 ```
 import { ClickCounterRuntimeModule } from "../components/click-counter/clickCounter.runtime.module";
+...
 injector.bindModule(new ClickCounterRuntimeModule());
 ```
 
