@@ -1,9 +1,9 @@
-import { ClickCounterModule } from "./clickCounter.module";
-import { IInjectorModule, IInjector } from "@paperbits/common/injection";
-import { ClickCounterEditor } from "./clickCounterEditor";
+import { IInjector, IInjectorModule } from "@paperbits/common/injection";
 import { ClickCounterHandlers } from "../clickCounterHandlers";
+import { ClickCounterModule } from "./clickCounter.module";
+import { ClickCounterEditor } from "./clickCounterEditor";
 
-export class ClickCounterEditorModule implements IInjectorModule {
+export class ClickCounterDesignModule implements IInjectorModule {
     public register(injector: IInjector): void {
         injector.bindModule(new ClickCounterModule());
         injector.bind("clickCounterEditor", ClickCounterEditor);

@@ -1,20 +1,18 @@
 const path = require("path");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
+const { merge } = require("webpack-merge");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const runtimeConfig = require("./webpack.runtime.js");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 
-const designerConfig = {
+const runtimeConfig = {
     mode: "none",
     target: "web",
     entry: {
-        "editors/scripts/paperbits": ["./src/startup.design.ts"],
-        "editors/styles/paperbits": [`./src/themes/designer/styles/styles.scss`],
+        "scripts/theme": ["./src/startup.runtime.ts"],
     },
     output: {
         filename: "./[name].js",
-        path: path.resolve(__dirname, "./dist/designer")
+        path: path.resolve(__dirname, "dist/runtime"),
     },
     module: {
         rules: [
@@ -29,7 +27,10 @@ const designerConfig = {
             },
             {
                 test: /\.tsx?$/,
-                loader: "awesome-typescript-loader"
+                loader: "ts-loader",
+                options: {
+                    allowTsInNodeModules: true
+                }
             },
             {
                 test: /\.html$/,
@@ -50,29 +51,46 @@ const designerConfig = {
                 }
             },
             {
-                test: /\.(raw|liquid)$/,
+                test: /\.vue$/,
+                loader: 'vue-loader'
+            },
+            {
+                test: /\.liquid$/,
                 loader: "raw-loader"
             }
         ]
     },
     plugins: [
-        new CleanWebpackPlugin(),
-        new MiniCssExtractPlugin({
-            filename: "[name].css",
-            chunkFilename: "[id].css"
-        }),
+        new MiniCssExtractPlugin({ filename: "[name].css", chunkFilename: "[id].css" }),
         new CopyWebpackPlugin({
             patterns: [
-                { from: `./src/data`, to: `./data` },
-                { from: `./src/config.design.json`, to: `./config.json` },
-                { from: `./src/themes/designer/assets/index.html`, to: "index.html" },
-                { from: `./src/themes/designer/styles/fonts`, to: "editors/styles/fonts" },
+                { from: `./src/themes/website/styles/fonts`, to: "styles/fonts" },
+                { from: `./src/themes/website/assets` }
             ]
         })
     ],
     resolve: {
+        alias: {
+            "vue$": "vue/dist/vue.esm.js"
+        },
         extensions: [".ts", ".tsx", ".js", ".jsx", ".html", ".scss"]
     }
-};
+}
 
-module.exports = [designerConfig, runtimeConfig(true)]
+module.exports = (designer) => {
+    const modification = {
+        entry: {},
+        output: {}
+    }
+
+    if (designer) {
+        modification.entry["styles/theme"] = `./src/themes/website/styles/styles.design.scss`;
+        modification.output["path"] = path.resolve(__dirname, "dist/designer");
+    }
+    else {
+        modification.entry["styles/theme"] = `./src/themes/website/styles/styles.scss`
+        modification.output["path"] = path.resolve(__dirname, "dist/publisher/assets");
+    }
+
+    return merge(runtimeConfig, modification);
+};

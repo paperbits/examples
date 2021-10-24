@@ -14,7 +14,7 @@ import { SearchDesignModule } from "@paperbits/core/search/search.design.module"
 import { StaticObjectStorage } from "../persistence/staticObjectStorage";
 import { StaticBlobStorage } from "../persistence/staticBlobStorage";
 import { StaticRoleService } from "../user/staticRoleService";
-import { ClickCounterEditorModule } from "../components/click-counter/design/clickCounterEditor.module";
+import { ClickCounterDesignModule } from "../components/click-counter/design/clickCounter.design.module";
 import { HistoryRouteHandler } from "@paperbits/common/routing";
 
 
@@ -27,6 +27,6 @@ export class DemoDesignModule implements IInjectorModule {
         injector.bindToCollection("autostart", HistoryRouteHandler);
         injector.bindSingleton("logger", ConsoleLogger);
         injector.bindModule(new SearchDesignModule());
-        injector.bindModule(new ClickCounterEditorModule());
+        injector.bindModule(new ClickCounterDesignModule());
     }
 }

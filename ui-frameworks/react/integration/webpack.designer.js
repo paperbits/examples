@@ -2,30 +2,19 @@ const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const runtimeConfig = require("./webpack.runtime");
+const runtimeConfig = require("./webpack.runtime.js");
 
 
-const publisherConfig = {
+const designerConfig = {
     mode: "none",
-    target: "node",
-    node: {
-        __dirname: false,
-        __filename: false,
-    },
+    target: "web",
     entry: {
-        "index": ["./src/startup.publish.ts"]
-    },
-    optimization: {
-        minimize: false
+        "editors/scripts/paperbits": ["./src/startup.design.ts"],
+        "editors/styles/paperbits": [`./src/themes/designer/styles/styles.scss`],
     },
     output: {
         filename: "./[name].js",
-        path: path.resolve(__dirname, "dist/publisher"),
-        library: "publisher",
-        libraryTarget: "commonjs2"
-    },
-    externals: {
-        "firebase-admin": "firebase-admin"
+        path: path.resolve(__dirname, "./dist/designer")
     },
     module: {
         rules: [
@@ -33,14 +22,22 @@ const publisherConfig = {
                 test: /\.scss$/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    { loader: "css-loader", options: { url: false } },
+                    {
+                        loader: "css-loader",
+                        options: {
+                            url: (url) => /\/icon-.*\.svg$/.test(url)
+                        }
+                    },
                     { loader: "postcss-loader" },
                     { loader: "sass-loader" }
                 ]
             },
             {
                 test: /\.tsx?$/,
-                loader: "awesome-typescript-loader"
+                loader: "ts-loader",
+                options: {
+                    allowTsInNodeModules: true
+                }
             },
             {
                 test: /\.html$/,
@@ -68,11 +65,16 @@ const publisherConfig = {
     },
     plugins: [
         new CleanWebpackPlugin(),
-        new MiniCssExtractPlugin({ filename: "[name].css", chunkFilename: "[id].css" }),
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+            chunkFilename: "[id].css"
+        }),
         new CopyWebpackPlugin({
             patterns: [
-                { from: `./src/data/demo.json`, to: `./data/demo.json` },
-                { from: `./src/config.publish.json`, to: `config.json` }
+                { from: `./src/data`, to: `./data` },
+                { from: `./src/config.design.json`, to: `./config.json` },
+                { from: `./src/themes/designer/assets/index.html`, to: "index.html" },
+                { from: `./src/themes/designer/styles/fonts`, to: "editors/styles/fonts" },
             ]
         })
     ],
@@ -81,4 +83,4 @@ const publisherConfig = {
     }
 };
 
-module.exports = [publisherConfig, runtimeConfig(false)];
+module.exports = [designerConfig, runtimeConfig(true)]
