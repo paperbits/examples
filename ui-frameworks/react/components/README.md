@@ -1,18 +1,18 @@
 # Click counter widget example in React
 
-## How to add widget to the project
+### How to add widget to the project
 
-### 1. Copy widget to project
+#### 1. Copy widget to project
 Copy entire *Click Counter* folder to *paperbits-demo* project, into `src/components` folder.
 
-### 2. Install React packages
+#### 2. Install React packages
 In the *paperbits-demo* project, install React packages:
 ```
 > npm i react react-dom --save
 > npm i @types/react --save-dev
 ```
 
-### 3. Register modules
+#### 3. Register modules
 Register *Click Counter* widget modules in respective module files of *paperbits-demo* project:
 
 **demo.design.module.ts**
@@ -34,7 +34,7 @@ import { ClickCounterRuntimeModule } from "../components/click-counter/clickCoun
 injector.bindModule(new ClickCounterRuntimeModule());
 ```
 
-### 4. Run designer locally
+#### 4. Run designer locally
 ```
 npm start
 ```
