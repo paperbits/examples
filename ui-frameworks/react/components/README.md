@@ -40,8 +40,10 @@ injector.bindModule(new ClickCounterPublishModule());
 
 **demo.runtime.module.ts**
 ```
+import { ReactModule } from "@paperbits/react/react.module";
 import { ClickCounterRuntimeModule } from "../components/click-counter/clickCounter.runtime.module";
 ...
+injector.bindModule(new ReactModule());
 injector.bindModule(new ClickCounterRuntimeModule());
 ```
 
