@@ -40,7 +40,6 @@ injector.bindModule(new ClickCounterPublishModule());
 
 **demo.runtime.module.ts**
 ```
-import { VueModule } from "@paperbits/vue/vue.module";
 import { ClickCounterRuntimeModule } from "../components/click-counter/clickCounter.runtime.module";
 ...
 injector.bindModule(new ClickCounterRuntimeModule());
