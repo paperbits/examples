@@ -43,7 +43,6 @@ injector.bindModule(new ClickCounterPublishModule());
 import { VueModule } from "@paperbits/vue/vue.module";
 import { ClickCounterRuntimeModule } from "../components/click-counter/clickCounter.runtime.module";
 ...
-injector.bindModule(new VueModule());
 injector.bindModule(new ClickCounterRuntimeModule());
 ```
 #### 5. Adjust build configuration
