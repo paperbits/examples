@@ -32,7 +32,7 @@ injector.bindModule(new ClickCounterDesignModule());
 **demo.publish.module.ts**
 ```
 import { VueModule } from "@paperbits/vue/vue.module";
-import { ClickCounterDesignModule } from "../components/click-counter/clickCounter.publish.module";
+import { ClickCounterPublishnModule } from "../components/click-counter/clickCounter.publish.module";
 ...
 injector.bindModule(new VueModule());
 injector.bindModule(new ClickCounterPublishModule());
