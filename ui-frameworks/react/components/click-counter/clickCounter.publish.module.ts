@@ -6,15 +6,28 @@
  * found in the LICENSE file and at https://paperbits.io/license/mit.
  */
 
-import { IInjectorModule, IInjector } from "@paperbits/common/injection";
+import { IInjector, IInjectorModule } from "@paperbits/common/injection";
+import { IWidgetService } from "@paperbits/common/widgets";
+import { ReactComponentBinder } from "@paperbits/react/bindings";
+import { ClickCounter } from "./clickCounter";
+import { ClickCounterModel } from "./clickCounterModel";
 import { ClickCounterModelBinder } from "./clickCounterModelBinder";
 import { ClickCounterViewModelBinder } from "./clickCounterViewModelBinder";
-import { ClickCounter } from "./clickCounter";
 
 export class ClickCounterPublishModule implements IInjectorModule {
     public register(injector: IInjector): void {
         injector.bind("clickCounter", ClickCounter);
         injector.bindToCollection("modelBinders", ClickCounterModelBinder);
         injector.bindToCollection("viewModelBinders", ClickCounterViewModelBinder);
+
+        const registry = injector.resolve<IWidgetService>("widgetService");
+
+        registry.registerWidget("click-counter", {
+            modelDefinition: ClickCounterModel,
+            modelBinder: ClickCounterModelBinder,
+            viewModelBinder: ClickCounterViewModelBinder,
+            componentBinder: ReactComponentBinder,
+            componentDefinition: ClickCounter
+        });
     }
 }
