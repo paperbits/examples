@@ -18,15 +18,15 @@ export class ClickCounterViewModelBinder implements ViewModelBinder<ClickCounter
     public stateToIntance(nextState: WidgetState, componentInstance: ClickCounter): void {
         componentInstance.setState(prevState => ({
             initialCount: nextState.initialCount,
-            classNames: nextState.styles // custom directive for React?
+            classNames: nextState.styles
         }));
     }
 
     public async modelToState(model: ClickCounterModel, state: WidgetState): Promise<void> {
         if (model.styles) {
-            state.styles =  await this.styleCompiler.getStyleModelAsync(model.styles);
+            state.styles = await this.styleCompiler.getStyleModelAsync(model.styles);
         }
-        
+
         state.initialCount = model.initialCount;
     }
 }

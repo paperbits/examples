@@ -29,7 +29,6 @@ export class ClickCounter extends React.Component {
                 <p className="not-configured">
                     This is an example widget that is yet to be implemented. You can use it as a scaffold for your own widget.
                 </p>
-
                 <p className="not-configured">
                     Please refer to documentation to learn about <a href="https://paperbits.io/wiki/widget-anatomy">widget anatomy</a>.
                 </p>

@@ -8,7 +8,6 @@
 
 import { IInjector, IInjectorModule } from "@paperbits/common/injection";
 import { IWidgetService } from "@paperbits/common/widgets";
-import { KnockoutComponentBinder } from "@paperbits/core/ko/knockoutComponentBinder";
 import { ReactComponentBinder } from "@paperbits/react/bindings";
 import { ClickCounter } from "./clickCounter";
 import { ClickCounterEditor } from "./clickCounterEditor";
@@ -38,7 +37,7 @@ export class ClickCounterDesignModule implements IInjectorModule {
 
         widgetService.registerWidgetEditor("click-counter", {
             displayName: "Click counter",
-            componentBinder: KnockoutComponentBinder,
+            componentBinder: ReactComponentBinder,
             componentDefinition: ClickCounterEditor,
             handlerComponent: ClickCounterHandlers,
             iconClass: "widget-icon widget-icon-component"
