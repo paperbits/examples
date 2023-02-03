@@ -19,11 +19,11 @@ import { ClickCounterViewModelBinder } from "./clickCounterViewModelBinder";
 
 export class ClickCounterDesignModule implements IInjectorModule {
     public register(injector: IInjector): void {
-        injector.bind("clickCounterEditor", ClickCounterEditor);
-        injector.bindToCollection("widgetHandlers", ClickCounterHandlers);
         injector.bind("clickCounter", ClickCounter);
-        injector.bindToCollection("modelBinders", ClickCounterModelBinder);
-        injector.bindToCollection("viewModelBinders", ClickCounterViewModelBinder);
+        injector.bind("clickCounterEditor", ClickCounterEditor);
+        injector.bindSingleton("clickCounterModelBinders", ClickCounterModelBinder);
+        injector.bindSingleton("clickCounterViewModelBinders", ClickCounterViewModelBinder);
+        injector.bindSingleton("clickCounterHandlers", ClickCounterHandlers);
 
         const widgetService = injector.resolve<IWidgetService>("widgetService");
 
