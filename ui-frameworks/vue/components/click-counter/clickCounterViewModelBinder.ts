@@ -6,50 +6,28 @@
  * found in the LICENSE file and at https://paperbits.io/license/mit.
  */
 
-import { Bag } from "@paperbits/common";
-import { ComponentFlow, WidgetBinding } from "@paperbits/common/editing";
-import { EventManager } from "@paperbits/common/events";
-import { ViewModelBinder } from "@paperbits/common/widgets";
+import { StyleCompiler } from "@paperbits/common/styles";
+import { ViewModelBinder, WidgetState } from "@paperbits/common/widgets";
 import { ClickCounterModel } from "./clickCounterModel";
 import { ClickCounter } from "./clickCounter";
 
 
 export class ClickCounterViewModelBinder implements ViewModelBinder<ClickCounterModel, ClickCounter>  {
-    constructor(private readonly eventManager: EventManager) { }
+    constructor(private readonly styleCompiler: StyleCompiler) { }
 
-    public async createWidgetBinding(model: ClickCounterModel, bindingContext: Bag<any>): Promise<WidgetBinding<ClickCounterModel, ClickCounter>> {
-        const binding = new WidgetBinding<ClickCounterModel, ClickCounter>();
-        binding.framework = "vue";
-        binding.model = model;
-        binding.name = "click-counter";
-        binding.displayName = "Click counter";
-        binding.editor = "click-counter-editor";
-        binding.readonly = false;
-        binding.flow = ComponentFlow.Block;
-        binding.draggable = true;
-        binding.viewModelClass = ClickCounter;
-        binding.applyChanges = async () => {
-            await this.modelToViewModel(model, binding.viewModel, bindingContext);
-            this.eventManager.dispatchEvent("onContentUpdate");
-        };
-        binding.onCreate = async () => {
-            await this.modelToViewModel(model, binding.viewModel, bindingContext);
-        };
-        binding.onDispose = async () => {
-            if (model.styles?.instance) {
-                bindingContext.styleManager.removeStyleSheet(model.styles.instance.key);
-            }
-        };
-
-        return binding;
+    public stateToIntance(nextState: WidgetState, componentInstance: ClickCounter): void {
+        componentInstance.initialCount = nextState.initialCount;
+        // componentInstance.setState(prevState => ({
+        //     initialCount: nextState.initialCount,
+        //     classNames: nextState.styles
+        // }));
     }
 
-    public async modelToViewModel(model: ClickCounterModel, viewModel: ClickCounter, bindingContext?: Bag<any>): Promise<ClickCounter> {
-        viewModel.initialCount = model.initialCount;
-        return viewModel;
-    }
+    public async modelToState(model: ClickCounterModel, state: WidgetState): Promise<void> {
+        if (model.styles) {
+            state.styles = await this.styleCompiler.getStyleModelAsync(model.styles);
+        }
 
-    public canHandleModel(model: ClickCounterModel): boolean {
-        return model instanceof ClickCounterModel;
+        state.initialCount = model.initialCount;
     }
 }
