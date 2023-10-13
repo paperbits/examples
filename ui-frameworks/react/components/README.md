@@ -32,7 +32,7 @@ injector.bindModule(new ClickCounterDesignModule());
 **demo.publish.module.ts**
 ```
 import { ReactModule } from "@paperbits/react/react.module";
-import { ClickCounterDesignModule } from "../components/click-counter/clickCounter.publish.module";
+import { ClickCounterPublishModule } from "../components/click-counter/clickCounter.publish.module";
 ...
 injector.bindModule(new ReactModule());
 injector.bindModule(new ClickCounterPublishModule());
